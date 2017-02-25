@@ -1,0 +1,13 @@
+function! InsDedupParen(closer)
+	let cur_ch = getline('.')[col('.')-1]
+	let parenRList = ["}", ")", "]", "\"", "\'"]
+	let paren_index = index(parenRList, cur_ch)
+	if paren_index >= 0 && parenRList[paren_index] == a:closer
+		return "\<C-O>a"
+	endif
+	return a:closer
+endfunction
+
+inoremap <silent> ) <C-R>=InsDedupParen(')')<CR>
+inoremap <silent> ] <C-R>=InsDedupParen(']')<CR>
+inoremap <silent> } <C-R>=InsDedupParen('}')<CR>
