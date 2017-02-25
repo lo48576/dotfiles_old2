@@ -1,0 +1,119 @@
+# Alias configuration
+
+# enable alias expansion of commands after sudo command with a space after "sudo".
+alias sudo="sudo "
+#alias sudo="sudo env PATH=\"$SUDO_PATH:${PATH}\" "
+
+alias where="command -v"
+alias j="jobs -l"
+
+alias grep="grep --color=auto"
+
+function {
+	#LS_COMMON_OPT='--time-style="+%Y-%m-%d %H:%M:%S"'
+	# --time-style=long-iso : "+%Y-%m-%d %H:%M" format
+	local LS_COMMON_OPT="--time-style=long-iso"
+	case "$OSTYPE" in
+	linux*)
+		alias ls="ls --color=auto ${LS_COMMON_OPT}"
+		;;
+	freebsd*|darwin*)
+		alias ls="ls -G -w ${LS_COMMON_OPT}"
+		;;
+	esac
+}
+
+# -a (--all): list entries starting with .
+alias la="ls -a"
+# -F (--classify): append file type indicators
+alias lf="ls -F"
+# -l: long listing
+alias ll="ls -l"
+# -h (--human-readable): print sizez in human readable form
+alias llh="ls -lh"
+alias lla="ls -la"
+alias llah="ls -lha"
+alias llha="ls -lha"
+
+whence -p l >/dev/null || alias l="ls"
+whence -p s >/dev/null || alias s="ls"
+
+# -h (--human-readable): print sizes in human readable format
+alias du="du -h"
+alias df="df -h"
+
+# -l: use a login shell
+alias su="su -l"
+
+# a: Lift the BSD-style "only yourself" restriction
+# u: Display user-oriented format
+# x: Lift the BSD-style "must have a tty" restriction
+alias pa="ps aux"
+
+# restart zsh
+alias zz="exec zsh"
+
+# Use neovim instead of vim if available.
+whence -p nvim >/dev/null && alias vim="nvim"
+whence -p nvim >/dev/null && alias vimdiff="nvim -d"
+whence -p nvim >/dev/null && alias view="nvim -R"
+# vim with saved session
+whence -p vim >/dev/null && alias vv="vim -S"
+
+# When you run "udon world" or "udon @world", your world will be overspread with udon noodle!
+whence -p emerge >/dev/null && alias udon="sudo emerge -uDNv --keep-going"
+
+# Always show man page in English
+alias cman="LANG='C' man"
+
+autoload -Uz zmv
+alias zmv="noglob zmv"
+alias zmvw="noglob zmv -W"
+alias zcp="noglob zmv -C"
+alias zcpw="noglob zmv -C -W"
+alias zln="noglob zmv -L"
+alias zlnw="noglob zmv -L -W"
+
+alias hist-all="history -E 1"
+alias histgrep="history -E 1 | grep"
+
+# ag: the_silver_searcher
+#     A code-searching tool similar to ack, but faster
+# -S (--smart-case): Match case sensitively if there are any uppercase letters in PATTERN,
+#                    or case nsensitively otherwise.
+# -f (--follow): Follow Symlinks.
+# --stats: Print stats (files scanned, time taken, etc)
+# --hidden: Search hidden files. This option obeys ignore files.
+if whence -p ag >/dev/null ; then
+	alias ag="ag -Sf --stats"
+	alias agh="ag -Sf --stats --hidden"
+fi
+
+# Quit zsh like vim
+alias :q="exit"
+# I sometimes press 'q' with Shift because ':' is Shift-; ...
+alias :Q="exit"
+# Edit file with vim like vim
+alias :e="$EDITOR"
+
+alias ::="mytmux"
+
+# bundle exec
+whence bundle >/dev/null && alias be="bundle exec"
+
+#alias -s exe="wine64"
+
+# Prevent executing `startx` from X environment by mistake
+whence startx >/dev/null && alias startx="[[ -z \$DISPLAY ]] && startx"
+
+# Prevent overwriting files by accident.
+alias mv="mv -i"
+alias cp="cp -i"
+
+# Commands which require root privilege.
+alias zfs="sudo zfs"
+alias zpool="sudo zpool"
+alias zdb="sudo zdb"
+alias btrfs="sudo btrfs"
+
+# vim: set foldmethod=marker :

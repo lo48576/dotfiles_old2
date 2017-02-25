@@ -1,0 +1,9 @@
+# Editor temporary files.
+*~
+.*.swp
+
+# Vim session files.
+Session.vim
+
+# Rustfmt backup files.
+*.rs.bk
