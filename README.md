@@ -1,7 +1,9 @@
 # dotfiles management utilities
 
 ## Config
-Write `/profile` file to specify which files to deploy (and to be feedbacked).
+1. Write `/profiles/*` file to specify which files to deploy (and to be feedbacked) if necessary.
+2. Create symlink to a file in `/profiles/` with link name `/profile`
+   (for example, run `ln -s profiles/host-poyo profile` at repository root)
 
 For example, if you want to use `/files/foo` and `/files/bar`, write `/profile` as below:
 
