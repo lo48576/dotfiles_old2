@@ -1,0 +1,61 @@
+[include]
+    path = config_local
+[user]
+    name = Takuma YOSHIOKA
+    email = tashioka.256@gmail.com
+[color]
+    ui = auto
+[pager]
+# see https://github.com/blog/2188-git-2-9-has-been-released#beautiful-diffs .
+    log = diff-highlight | less
+    show = diff-highlight | less
+    diff = diff-highlight | less
+[diff]
+# see https://github.com/blog/2188-git-2-9-has-been-released#beautiful-diffs .
+    #compactionHeuristic = true
+# see https://github.com/blog/2288-git-2-11-has-been-released .
+    indentHeuristic = true
+[core]
+    abbrev = 12
+    ignorecase = false
+[merge]
+    ff = false
+[pull]
+    ff = true
+[alias]
+# see http://d.hatena.ne.jp/sugyan/20111103/1320247493 .
+    tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
+# see http://qiita.com/kyanny/items/10a57a4f1d2806e3a3b8 .
+    delete-merged-branches = !git branch --merged | grep -vE '^\\*|master$|develop$|release$' | xargs -I % git branch -d %
+# see http://qiita.com/mochizukikotaro/items/93c8406621be57dd4e99 .
+    delete-merged-branches-remote = !git branch -a --merged | grep -vE '^\\*|master$|develop$|release$' | xargs -I % git branch -d %
+# see http://qiita.com/Yinaura/items/9d75307c3678f04cd475 .
+    revision = show -s --format=%H
+# see http://qiita.com/takahiroki/items/f4d83fd71235857a7d04 .
+    exec = !sh -c 'exec "$@"' $(which sh)
+    amend = commit --amend
+    branches = branch -a
+    ci = commit
+    co = checkout
+    st = status
+    pl = pull
+    psh = push
+    ps = push
+[help]
+    autocorrect = 20
+[filter "lfs"]
+    clean = git-lfs clean %f
+    smudge = git-lfs smudge %f
+    required = true
+[credential]
+    helper = cache
+[commit]
+    gpgsign = true
+[interactive]
+    diffFilter = diff-highlight
+[log]
+    date = iso
+[fetch]
+    prune = true
+
+# vim: set ft=gitconfig :
