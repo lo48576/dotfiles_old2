@@ -567,6 +567,27 @@ false && () {
 # }}}1 Application
 
 
+# Widgets {{{1
+#
+# Define and register widgets
+#
+
+# Select git reposiotories.
+# See http://ubnt-intrepid.hatenablog.com/entry/rhq .
+function __fuzzy-select-repositories() {
+    local selected=$(rhq list | sk --prompt='REPOS> ' --query="$LBUFFER")
+    if [[ -n $selected ]]; then
+        BUFFER=" cd \"${selected}\""
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N __fuzzy-select-repositories
+bindkey '^g' __fuzzy-select-repositories
+
+# }}}1
+
+
 # Initialize {{{1
 #
 # Initialize
