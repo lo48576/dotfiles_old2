@@ -593,11 +593,13 @@ bindkey '^g' __fuzzy-select-repositories
 # Initialize
 #
 
-# Print information about terminal
-echo "terminal emulator: ${ZSHRC_TERMINAL_EMULATOR}"
-echo "terminal multiplexer: ${ZSHRC_TERMINAL_MULTIPLEXER}"
-echo "terminal: ${TERM}"
-echo "language: ${LANG}"
+if [[ -n $TERM ]] ; then
+    # Print information about terminal
+    echo "terminal emulator: ${ZSHRC_TERMINAL_EMULATOR}"
+    echo "terminal multiplexer: ${ZSHRC_TERMINAL_MULTIPLEXER}"
+    echo "terminal: ${TERM}"
+    echo "language: ${LANG}"
+fi
 
 #if (which zprof >/dev/null) ; then
 #	zprof | less
