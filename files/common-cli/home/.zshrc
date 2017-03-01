@@ -174,7 +174,13 @@ elif [[ $COLORTERM == "gnome-terminal" ]] ; then
 	ZSHRC_TERMINAL_EMULATOR="gnome-terminal"
 fi
 
-export ZSHRC_TERMINAL_EMULATOR=${ZSHRC_TERMINAL_EMULATOR:-linux}
+if [[ -n $TERM ]] ; then
+    ZSHRC_TERMINAL_EMULATOR=${ZSHRC_TERMINAL_EMULATOR:-linux}
+else
+    ZSHRC_TERMINAL_EMULATOR="noterm"
+fi
+
+export ZSHRC_TERMINAL_EMULATOR
 export ZSHRC_TERMINAL_MULTIPLEXER
 
 # Set $LANG and $TERM.
@@ -194,6 +200,9 @@ function {
 		linux)
 			LANG="C"
 			;;
+        noterm)
+            LANG=$USER_DEFAULT_LANG
+            ;;
 		*)
 			LANG="C"
 			;;
