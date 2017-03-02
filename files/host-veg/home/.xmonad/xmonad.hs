@@ -357,6 +357,8 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
     , ((modm              , xK_semicolon), mltermAttachTmuxSession)
     -- Specify session to attach or create with prompt.
     , ((modm .|. shiftMask, xK_semicolon), tmuxSessionPrompt)
+    -- Copy unicode character.
+    , ((modm              , xK_u     ), Run.safeSpawn "rofi" ["-modi", "Emoji:~/scripts/emoji-prompt.sh", "-show", "Emoji"])
     ]
 
 ------------------------------------------------------------------------
