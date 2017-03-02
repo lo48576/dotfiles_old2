@@ -230,29 +230,29 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
     --
     ++
     -- 'L'ock screen
-    [ ((modm .|. shiftMask, xK_l     ), spawn "xscreensaver-command -lock")
+    [ ((modm .|. shiftMask, xK_l     ), Run.safeSpawn "xscreensaver-command" ["-lock"])
     -- Capture window
     , ((0                 , xK_Print ), spawn "import -frame ~/Pictures/screenshots/`date '+screenshot-%Y-%m-%d-%H%M%S%z.png'`")
     -- Capture screen
     --, ((modm              , xK_Print ), spawn "import -screen ~/Pictures/`date '+screenshot-%Y-%m-%d-%H%M%S%z.png'`")
-    , ((modm              , xK_Print ), spawn "scrot -m 'screenshot-%Y-%m-%d-%H%M%S%z.png' -e 'mv $f ~/Pictures/screenshots/'")
+    , ((modm              , xK_Print ), Run.safeSpawn "scrot" ["-m", "screenshot-%Y-%m-%d-%H%M%S%z.png", "-e", "mv $f ~/Pictures/screenshots/"])
     -- Run 'F'iler
-    --, ((modm              , xK_f     ), spawn "nautilus --new-window")
-    , ((modm              , xK_f     ), spawn "pcmanfm")
+    --, ((modm              , xK_f     ), Run.safeSpawn "nautilus" ["--new-window"])
+    , ((modm              , xK_f     ), Run.safeSpawnProg "pcmanfm")
     -- Run 'F'iler as root
-    , ((modm .|. shiftMask, xK_f     ), spawn "gksu pcmanfm")
+    , ((modm .|. shiftMask, xK_f     ), Run.safeSpawn "gksu" ["pcmanfm"])
     -- 'Q'uit xmonad without warning
     , ((modm .|. shiftMask .|. controlMask, xK_q ), io (Exit.exitWith Exit.ExitSuccess))
     -- Eject DVD
-    , ((0                 , xF86XK_Eject ), spawn "eject -T /dev/sr0")
+    , ((0                 , xF86XK_Eject ), Run.safeSpawn "eject" ["-T", "/dev/sr0"])
     ]
 
     --
     -- settings for laptop
     --
     -- ++
-    -- [ ((0                 , xF86XK_MonBrightnessUp ), spawn "xbacklight -steps 1 -inc 9")
-    -- , ((0                 , xF86XK_MonBrightnessDown ), spawn "xbacklight -steps 1 -dec 9")
+    -- [ ((0                 , xF86XK_MonBrightnessUp ), Run.safeSpawn "xbacklight" ["-steps", "1", "-inc", "9"])
+    -- , ((0                 , xF86XK_MonBrightnessDown ), Run.safeSpawn "xbacklight" ["-steps", "1", "-dec", "9"])
     -- ]
 
     --
@@ -270,8 +270,8 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
     ++
     [ ((0                 , xF86XK_AudioPause ), spawn "~/scripts/local/mpd.sh toggle_pause")
     , ((modm              , xK_Pause ), spawn "~/scripts/local/mpd.sh toggle_pause")
-    , ((modm              , xF86XK_AudioRaiseVolume ), spawn "~/scripts/local/mpd.sh set_volume '+3'")
-    , ((modm              , xF86XK_AudioLowerVolume ), spawn "~/scripts/local/mpd.sh set_volume '-3'")
+    , ((modm              , xF86XK_AudioRaiseVolume ), spawn "~/scripts/local/mpd.sh set_volume +3")
+    , ((modm              , xF86XK_AudioLowerVolume ), spawn "~/scripts/local/mpd.sh set_volume -3")
     , ((0                 , xF86XK_AudioPlay ), spawn "~/scripts/local/mpd.sh set_play_status play")
     , ((0                 , xF86XK_AudioStop ), spawn "~/scripts/local/mpd.sh set_play_status stop")
     , ((0                 , xF86XK_AudioPrev ), spawn "~/scripts/local/mpd.sh play previous")
@@ -341,17 +341,16 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_s ), Prompt.shellPrompt myXPConfig)
     -- Select frequently used applications with grid.
     , ((modm              , xK_Tab ), GridSelect.runSelectedAction GridSelect.defaultGSConfig
-        [ ("firefox"        , spawn "firefox")
-        , ("thunderbird"    , spawn "thunderbird")
-        , ("pcmanfm"        , spawn "pcmanfm")
-        , ("pavucontrol"    , spawn "pavucontrol")
-        , ("arandr"         , spawn "arandr")
-        , ("qmpdclient"     , spawn "qmpdclient")
+        [ ("firefox"        , Run.safeSpawnProg "firefox")
+        , ("thunderbird"    , Run.safeSpawnProg "thunderbird")
+        , ("pcmanfm"        , Run.safeSpawnProg "pcmanfm")
+        , ("pavucontrol"    , Run.safeSpawnProg "pavucontrol")
+        , ("arandr"         , Run.safeSpawnProg "arandr")
+        , ("qmpdclient"     , Run.safeSpawnProg "qmpdclient")
         , ("WLAN reconnect" , spawn $ "(pkexec netctl restart veg_default1"
                                       ++ " && notify-send --hint=int:transient:1 --app-name='netctl' 'reconnected.' 'WLAN reconnected.' -t 2500 -u low)"
                                       ++ " || notify-send --app-name='netctl' 'reconnect failed.' 'Failed to reconnect WLAN.' -t 2500 -u low")
-        {-, ("hybrid-sleep"   , spawn $ "gksu systemctl hybrid-sleep")-}
-        , ("hybrid-sleep"   , spawn $ "systemctl hybrid-sleep")
+        , ("hybrid-sleep"   , Run.safeSpawn "systemctl" ["hybrid-sleep"])
         ]
       )
     -- Select an existing session with grid.
@@ -525,7 +524,7 @@ myStartupHook = do
     -- To run tmux in X session started on tmux, erase $TMUX environment variable.
     liftIO $ Env.unsetEnv "TMUX"
 
-    spawn "xsetroot -cursor_name left_ptr"
+    Run.safeSpawn "xsetroot" ["-cursor_name", "left_ptr"]
     spawn "xkbcomp ~/.lifebook_keyboard_lite.xkm :0"
     spawn $
         "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN"
