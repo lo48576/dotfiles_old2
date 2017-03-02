@@ -7,3 +7,13 @@ Session.vim
 
 # Rustfmt backup files.
 *.rs.bk
+
+# Windows.
+## NTFS metadata.
+*:Zone.Identifier:$DATA
+# Thumbnails.
+Thumbs.db
+
+# Mac.
+._*
+.DS_Store
