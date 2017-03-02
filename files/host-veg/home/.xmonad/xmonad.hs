@@ -454,9 +454,10 @@ myLayout =
 -- 'className' and 'appName' are used below.
 --
 myManageHook = composeAll . concat $
+    [ [ className =? c --> doFocus | c <- myFocus ]
     -- Open new window after active window and don't change active window
     -- except when the new window is not a dialog.
-    [ [ not `liftM` ManageHelpers.isDialog --> InsertPosition.insertPosition InsertPosition.Below InsertPosition.Older]
+    , [ not `liftM` ManageHelpers.isDialog --> InsertPosition.insertPosition InsertPosition.Below InsertPosition.Older]
     , [ManageDocks.manageDocks]
     --, [manageHook defaultConfig]
     , [manageHook def]
@@ -473,6 +474,8 @@ myManageHook = composeAll . concat $
       myIgnores = ["desktop_window", "kdesktop"]
       myFloatRole = ["gimp-message-dialog"]
       role = stringProperty "WM_WINDOW_ROLE"
+      doFocus = InsertPosition.insertPosition InsertPosition.Below InsertPosition.Newer
+      myFocus = ["Gcr-prompter", "Pinentry-gtk-2"]
 
 ------------------------------------------------------------------------
 -- Event handling
