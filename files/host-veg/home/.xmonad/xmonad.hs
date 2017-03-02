@@ -134,10 +134,10 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn "dmenu_run")
+    , ((modm,               xK_p     ), Run.safeSpawn "zsh" ["-ic", "dmenu_run"])
 
     -- launch gmrun
-    , ((modm .|. shiftMask, xK_p     ), spawn "rofi -show drun")
+    , ((modm .|. shiftMask, xK_p     ), Run.safeSpawn "zsh" ["-ic", "rofi -show drun"])
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
