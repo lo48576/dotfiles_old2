@@ -97,11 +97,6 @@ hook_post_source = '''
 	doautocmd GnuPG BufReadCmd,FileReadCmd
 '''
 
-# HTML5 validator.
-[[plugins]]
-repo = 'hokaccha/vim-html5validator'
-on_cmd = 'HTML5Validate'
-
 # Extends 'j' command.
 [[plugins]]
 repo = 'osyo-manga/vim-jplus'
