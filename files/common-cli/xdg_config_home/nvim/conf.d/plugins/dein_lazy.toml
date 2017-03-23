@@ -19,7 +19,7 @@ on_ft = ['html', 'html5', 'css', 'scss', 'sass', 'less', 'stylus', 'vim']
 # Emmet.
 [[plugins]]
 repo = 'mattn/emmet-vim'
-on_ft = ['html', 'xhtml', 'css', 'scss', 'html5', 'eruby', 'jsp', 'xml', 'coffee', 'jinja', 'mason', 'liquid', 'haml', 'html.handlebars']
+on_ft = ['html', 'xhtml', 'css', 'scss', 'html5', 'eruby', 'jsp', 'xml', 'coffee', 'jinja', 'mason', 'liquid', 'haml', 'html.handlebars', 'xslt']
 on_cmd = ['Emmet', 'EmmetInstall']
 hook_add = 'call larry_config#dein#emmet#hook_add()'
 
