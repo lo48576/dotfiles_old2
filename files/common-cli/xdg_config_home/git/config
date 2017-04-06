@@ -41,6 +41,8 @@
     pl = pull
     psh = push
     ps = push
+    df = diff
+    dif = diff
 [help]
     autocorrect = 20
 [filter "lfs"]
