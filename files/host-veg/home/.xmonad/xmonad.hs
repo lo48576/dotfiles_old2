@@ -342,7 +342,7 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_s ), Prompt.shellPrompt myXPConfig)
     -- Select frequently used applications with grid.
     , ((modm              , xK_Tab ), GridSelect.runSelectedAction GridSelect.defaultGSConfig
-        [ ("firefox"        , Run.safeSpawnProg "firefox")
+        [ ("firefox"        , systemdScopeRunFirefox)
         , ("thunderbird"    , Run.safeSpawnProg "thunderbird")
         , ("pcmanfm"        , Run.safeSpawnProg "pcmanfm")
         , ("pavucontrol"    , Run.safeSpawnProg "pavucontrol")
@@ -644,6 +644,14 @@ tmuxSessionPrompt =
     tmuxSessionsList >>=
     (\ss -> Prompt.inputPromptWithCompl myXPConfig "tmux session" (Prompt.mkComplFunFromList' ss)
             ?+ mltermTmuxSession)
+
+systemdScopeRun :: Maybe String -> [String] -> X ()
+systemdScopeRun slice cmdline = Run.safeSpawn "systemd-run" $ ["--user", "--scope"] ++ (sliceToList slice) ++ ["--"] ++ cmdline
+    where sliceToList Nothing = []
+          sliceToList (Just v) = ["--slice=" ++ v]
+
+systemdScopeRunFirefox :: X ()
+systemdScopeRunFirefox = systemdScopeRun (Just "firefox") ["firefox"]
 ------------------------------------------------------------------------
 
 
