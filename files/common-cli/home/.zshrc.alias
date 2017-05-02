@@ -111,9 +111,6 @@ alias mv="mv -i"
 alias cp="cp -i"
 
 # Commands which require root privilege.
-alias zfs="sudo zfs"
-alias zpool="sudo zpool"
-alias zdb="sudo zdb"
 alias btrfs="sudo btrfs"
 
 # vim: set foldmethod=marker :
