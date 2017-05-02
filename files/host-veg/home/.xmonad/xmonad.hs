@@ -121,6 +121,7 @@ myXPConfig = Prompt.amberXPConfig {
     , ((controlMask, xK_d ), Prompt.deleteString Prompt.Next)
     , ((controlMask, xK_b ), Prompt.moveCursor Prompt.Prev)
     , ((controlMask, xK_f ), Prompt.moveCursor Prompt.Next)
+    , ((controlMask, xK_m ), Prompt.setSuccess True >> Prompt.setDone True)
     ]
 }
 
