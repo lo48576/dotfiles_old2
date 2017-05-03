@@ -348,9 +348,7 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
         , ("pavucontrol"    , Run.safeSpawnProg "pavucontrol")
         , ("arandr"         , Run.safeSpawnProg "arandr")
         , ("qmpdclient"     , Run.safeSpawnProg "qmpdclient")
-        , ("WLAN reconnect" , spawn $ "(pkexec netctl restart veg_default1"
-                                      ++ " && notify-send --hint=int:transient:1 --app-name='netctl' 'reconnected.' 'WLAN reconnected.' -t 2500 -u low)"
-                                      ++ " || notify-send --app-name='netctl' 'reconnect failed.' 'Failed to reconnect WLAN.' -t 2500 -u low")
+        , ("WLAN reconnect" , Run.safeSpawn "rofi" ["-modi", "Wifi:~/scripts/rofi-wifi.sh", "-show", "Wifi"])
         , ("hybrid-sleep"   , Run.safeSpawn "systemctl" ["hybrid-sleep"])
         ]
       )
