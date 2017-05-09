@@ -7,7 +7,7 @@ Config { font = "xft:VLGothic-10:bold"
        -- 1920 * 0.80 = 1536
        -- 2560 * 0.80 = 2048
        -- height: trayer(height:20)
-       , position = Static { xpos = 0, ypos = 0, width = 2048, height = 20 }
+       , position = TopSize L 80 20
        , lowerOnStart = True
        , overrideRedirect = False
        , commands = [ Run MultiCpu ["-p","3","-t","Cpu:<vbar><total>%(<total0>/<total1>/<total2>/<total3>)",
