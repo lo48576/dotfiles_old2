@@ -22,6 +22,6 @@ else
         exit
     else
         SSID="$(echo "$@" | sed -e 's/[^\t]*\t[^\t]*\t[^\t]*\t\(.*\)/\1/')"
-        nohup nmcli con up ifname wlp2s0 ap "${SSID}" >/dev/null &
+        nohup nmcli con up "${SSID}" ifname wlp2s0 >/dev/null &
     fi
 fi
