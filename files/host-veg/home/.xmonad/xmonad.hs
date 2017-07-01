@@ -297,7 +297,7 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
     , ((modm .|. controlMask, xK_m ), sendMessage $ MultiToggle.Toggle MultiToggle.MIRROR)
     -- Select window and focus ('G'rid)
     , ((modm              , xK_g ),
-        GridSelect.gridselectWindow GridSelect.defaultGSConfig
+        GridSelect.gridselectWindow def
         >>= flip whenJust (\w -> focus w >> windows (W.focusWindow w))
       )
     ]
@@ -322,7 +322,7 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
     -- Select workspace with prompt
     , ((modm .|. shiftMask, xK_v        ), DynamicWorkspaces.selectWorkspace myXPConfig)
     -- Select workspace with gridselect
-    , ((modm .|. controlMask, xK_v      ), GridSelect.gridselectWorkspace GridSelect.defaultGSConfig W.greedyView)
+    , ((modm .|. controlMask, xK_v      ), GridSelect.gridselectWorkspace def W.greedyView)
     -- 'W'orkspace operations
     , ((modm .|. controlMask, xK_w      ), Actions.submap . M.fromList $
       -- 'M'ove selected window to another workspace
@@ -341,7 +341,7 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
     -- 'S'hell prompt on the bottom of the screen.
     [ ((modm .|. shiftMask, xK_s ), Prompt.shellPrompt myXPConfig)
     -- Select frequently used applications with grid.
-    , ((modm              , xK_Tab ), GridSelect.runSelectedAction GridSelect.defaultGSConfig
+    , ((modm              , xK_Tab ), GridSelect.runSelectedAction def
         [ ("firefox"        , systemdScopeRunFirefox)
         , ("thunderbird"    , Run.safeSpawnProg "thunderbird")
         , ("pcmanfm"        , Run.safeSpawnProg "pcmanfm")
@@ -632,9 +632,9 @@ tmuxSessionsList' = (map proc . lines) `liftM` Run.runProcessWithInput "tmux" ["
                          else "attached"
 
 mltermAttachTmuxSession :: X ()
---mltermAttachTmuxSession = map genAction `liftM` tmuxSessionsList >>= runSelectedAction defaultGSConfig
+--mltermAttachTmuxSession = map genAction `liftM` tmuxSessionsList >>= runSelectedAction def
 --    where genAction sname = (sname, mltermTmuxSession sname)
-mltermAttachTmuxSession = map genAction `liftM` tmuxSessionsList' >>= GridSelect.runSelectedAction GridSelect.defaultGSConfig
+mltermAttachTmuxSession = map genAction `liftM` tmuxSessionsList' >>= GridSelect.runSelectedAction def
     where genAction (sname, sstat) = (sname ++ " [" ++ sstat ++ "]", mltermTmuxSession sname)
 
 tmuxSessionPrompt :: X ()
