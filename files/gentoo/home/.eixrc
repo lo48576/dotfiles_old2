@@ -47,3 +47,8 @@ FORMAT_INSTALLATION_DATE="%Y/%m/%d %H:%M:%S"
 # strftime() format for printing the installation date in short form
 #FORMAT_SHORT_INSTALLATION_DATE="%x"
 FORMAT_SHORT_INSTALLATION_DATE="%Y/%m/%d"
+
+# BOOLEAN
+# Do not output status line.
+## Required to disable tmux window title change.
+NOSTATUSLINE="true"
