@@ -615,7 +615,7 @@ escapeShellArg src = "\"" ++ (escape src) ++ "\""
             x    -> (x :)
 
 mltermTmuxSession :: String -> X ()
-mltermTmuxSession s = spawn $ "mlterm -e sh -c " ++ (escapeShellArg $ "tmux -2 attach-session -t =" ++ name ++ " || tmux -2 new-session -s " ++ name)
+mltermTmuxSession s = spawn $ "mlterm -e sh -c " ++ (escapeShellArg $ "tmux -2 new-session -d -s " ++ name ++ " ; exec tmux -2 attach-session -t =" ++ name)
     where name = escapeShellArg s
 
 -- Get tmux sessions.

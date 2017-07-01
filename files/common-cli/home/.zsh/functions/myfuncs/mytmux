@@ -31,9 +31,10 @@ if [[ -z $session_name ]] ; then
 	tmux attach 2>/dev/null \
 		|| tmux $COLOR_OPTION -f "$HOME"/.tmux.conf
 else
-    # If the session name is prefixed with '=', prefix match is disabled.
-	tmux attach -t "=$session_name" 2>/dev/null \
-		|| tmux $COLOR_OPTION -f "$HOME"/.tmux.conf new-session -s "$session_name"
+	# Create session without attaching to it.
+	# If the session name is prefixed with '=', prefix match is disabled.
+	tmux $COLOR_OPTION -f "$HOME"/.tmux.conf new-session -d -s "$session_name" 2>/dev/null || exit
+	exec tmux attach -t "=$session_name" 2>/dev/null
 fi
 
 # vim: set ft=zsh :
