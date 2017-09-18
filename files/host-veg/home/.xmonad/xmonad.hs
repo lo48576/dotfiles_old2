@@ -350,6 +350,7 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
         , ("qmpdclient"     , Run.safeSpawnProg "qmpdclient")
         , ("WLAN reconnect" , Run.safeSpawn "rofi" ["-modi", "Wifi:~/scripts/rofi-wifi.sh", "-show", "Wifi"])
         , ("hybrid-sleep"   , Run.safeSpawn "systemctl" ["hybrid-sleep"])
+        , ("display sleep"  , Run.safeSpawn "xset" ["dpms", "force", "off"])
         ]
       )
     -- Select an existing session with grid.
