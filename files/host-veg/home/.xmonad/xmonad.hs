@@ -475,7 +475,7 @@ myManageHook = composeAll . concat $
       myFloatRole = ["gimp-message-dialog"]
       role = stringProperty "WM_WINDOW_ROLE"
       doFocus = InsertPosition.insertPosition InsertPosition.Below InsertPosition.Newer
-      myFocus = ["Gcr-prompter", "Pinentry-gtk-2"]
+      myFocus = ["Gcr-prompter", "Pinentry-gtk-2", "Pinentry"]
 
 ------------------------------------------------------------------------
 -- Event handling
