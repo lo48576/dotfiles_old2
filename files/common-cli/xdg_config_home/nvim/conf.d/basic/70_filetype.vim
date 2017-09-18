@@ -3,6 +3,8 @@
 " Plain text
 autocmd Filetype text setlocal textwidth=0 noexpandtab
 
+" Markdown
+autocmd Filetype markdown setlocal expandtab softtabstop=2 shiftwidth=2 tabstop=2
 " AsciiDoc
 autocmd FileType asciidoc setlocal expandtab softtabstop=4 shiftwidth=4 tabstop=4
 " Haskell
@@ -21,8 +23,7 @@ autocmd FileType yaml setlocal expandtab softtabstop=2 shiftwidth=2 tabstop=2
 " Long long line can make vim quite heavy.
 " Disable syntax highlighting on plain text.
 function! DisableSyntax()
-	"if &ft =~ 'cmake\|asciidoc'
-	if &ft =~ 'cmake'
+	if &ft =~ 'cmake\|asciidoc\|markdown'
 		return
 	endif
 	set syntax=off
