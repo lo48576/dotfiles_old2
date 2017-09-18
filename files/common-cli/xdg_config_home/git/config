@@ -1,7 +1,7 @@
 [include]
     path = config_local
 [user]
-    name = Takuma YOSHIOKA
+    name = YOSHIOKA Takuma
     email = tashioka.256@gmail.com
 [color]
     ui = auto
