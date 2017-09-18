@@ -290,7 +290,7 @@ Kernel: %S
 Elapsed: %E
 CPU: %P"
 
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+type rustc >/dev/null 2>&1 && export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # }}}2 Applications Local
 
