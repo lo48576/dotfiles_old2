@@ -91,7 +91,7 @@ path=(
 	${HOME}/bin(N-/)
 	${HOME}/app{,32,64}/*(N-/)
 	${HOME}/scripts(N-/)
-	${HOME}/local/bin(N-/)
+	#${HOME}/local/bin(N-/)
 	$path)
 
 # For `sudo`.
@@ -116,8 +116,8 @@ export PATH
 #
 typeset -U manpath
 manpath=(
-	${HOME}/local/share/man(N-/)
-	${HOME}/local/man(N-)
+	#${HOME}/local/share/man(N-/)
+	#${HOME}/local/man(N-)
 	$manpath
 	"")
 # MANPATHの末尾にコロン(:)があると、システム全体の検索パスが末尾に追加される。
@@ -130,7 +130,7 @@ export MANPATH
 #
 typeset -U include
 include=(
-	${HOME}/local/include(N-/)
+	#${HOME}/local/include(N-/)
 	$include)
 export INCLUDE
 
@@ -140,7 +140,7 @@ export INCLUDE
 typeset -xT LD_LIBRARY_PATH ld_library_path
 typeset -U ld_library_path
 ld_library_path=(
-	${HOME}/local/lib(N-/)
+	#${HOME}/local/lib(N-/)
 	$ld_library_path)
 
 # LANG and TERM {{{2
