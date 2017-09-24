@@ -141,6 +141,7 @@ typeset -xT LD_LIBRARY_PATH ld_library_path
 typeset -U ld_library_path
 ld_library_path=(
 	#${HOME}/local/lib(N-/)
+	$(whence rustc >/dev/null && rustc +nightly --print sysroot)/lib(N-/)
 	$ld_library_path)
 
 # LANG and TERM {{{2
