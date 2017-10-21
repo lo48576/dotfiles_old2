@@ -335,13 +335,15 @@ block 'Environment variables' && {
             export INCLUDE
         }
 
-        block 'LD_LIBRARY_PATH' && () {
+        block 'LD_LIBRARY_PATH' && {
             typeset -xT LD_LIBRARY_PATH ld_library_path
             typeset -U ld_library_path
-            local rustc_sysroot_nightly=$_zshrc[app_base.rustc.sysroot.nightly]
-            ld_library_path=(
-                ${rustc_sysroot_nightly:+${rustc_sysroot_nightly}/lib}(N-/)
-                $ld_library_path)
+            () {
+                local rustc_sysroot_nightly=$_zshrc[app_base.rustc.sysroot.nightly]
+                ld_library_path=(
+                    ${rustc_sysroot_nightly:+${rustc_sysroot_nightly}/lib}(N-/)
+                    $ld_library_path)
+            }
         }
     }
 
