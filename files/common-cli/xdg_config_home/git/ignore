@@ -8,6 +8,9 @@ Session.vim
 # Rustfmt backup files.
 *.rs.bk
 
+# Python binary.
+*.pyc
+
 # Windows.
 ## NTFS metadata.
 *:Zone.Identifier:$DATA
