@@ -112,9 +112,8 @@ get_mpd_info() {
 }
 
 get_rogybgm_info() {
-	ap_mac="`iwlist wlp2s0 scan | sed -ne 's/.*Address: *\(.*\)$/\1/gp'`"
-	if [ "x$ap_mac" == "x00:A0:DE:9B:87:F0" ] ; then
-		# connected to SSR-NETWORK.
+	if LANG=C nmcli --mode tabular --escape no --terse --fields active,bssid dev wifi | grep -q 'yes:00:A0:DE:9B:87:F0' ; then
+		# Connected to SSR-NETWORK.
 		echo -ne 'status\ncurrentsong\nclose' \
 			| curl --max-time 1 -s 'telnet://172.16.11.82:6600' \
 			| sed -ne 's/^state: *\(.*\)/\1/gp;s/^Title: *\(.*\)$/\1/p' \
