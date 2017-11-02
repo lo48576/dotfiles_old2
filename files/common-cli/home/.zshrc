@@ -466,6 +466,10 @@ block 'Applications global' && {
         # -I (--IGNORE-CASE): Like -i, but always ignore case.
         # -R (--RAW-CONTROL-CHARS): Causes ANSI color escape sequences are output in "raw" form.
         export LESS='-x4 -XMiR'
+
+        if whence src-hilite-lesspipe.sh >/dev/null ; then
+            export LESSOPEN='| src-hilite-lesspipe.sh %s 2>&-'
+        fi
     }
 
     block 'Zsh builtins' && {
