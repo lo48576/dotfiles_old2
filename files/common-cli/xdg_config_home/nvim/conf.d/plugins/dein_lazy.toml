@@ -176,3 +176,22 @@ hook_source = '''
 repo = 'vim-voom/VOoM_extras'
 depends = 'vim-voom/VOoM'
 on_source = 'VOoM'
+
+# Language server support.
+[[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+#if = 'executable("rls") == 1'
+on_ft = 'rust'
+#hook_add = ':UpdateRemotePlugins'
+hook_add = 'call larry_config#dein#language_client#hook_add()'
+hook_source = '''
+	let g:LanguageClient_serverCommands = {
+		\	'rust': ['rustup', 'run', 'nightly', 'rls'],
+		\ }
+	" Automatically start language servers.
+	let g:LanguageClient_autoStart = 1
+'''
+
+# Show function signature and inline doc.
+[[plugins]]
+repo = 'Shougo/echodoc.vim'
