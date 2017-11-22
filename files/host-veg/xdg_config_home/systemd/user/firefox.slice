@@ -1,0 +1,11 @@
+[Unit]
+Description=Firefox Web Browser
+
+[Install]
+WantedBy=user-%U.target
+
+[Slice]
+#CPUWeight=256
+CPUWeight=400
+#CPUQuota=20%
+MemoryMax=8G
