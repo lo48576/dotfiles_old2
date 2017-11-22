@@ -1,0 +1,12 @@
+[Unit]
+Description=Bluetooth manager applet on systray
+# NOTE: Requires system bluetooth.service but it cannot be started from user service.
+;Requires=bluetooth.service
+;After=bluetooth.service
+BindsTo=xsession-start@%i.service
+PartOf=xsession-start@%i.service
+
+[Service]
+EnvironmentFile=%h/.xsession.env
+Type=simple
+ExecStart=/usr/bin/blueman-applet

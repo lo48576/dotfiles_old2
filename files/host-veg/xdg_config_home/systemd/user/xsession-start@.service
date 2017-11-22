@@ -1,0 +1,23 @@
+[Unit]
+Description=XSession starter unit
+;ConditionPathExists=%h/.Xauthority
+ConditionPathExists=/tmp/.X11-unix/X%i
+
+; blueman: system `bluetooth.service` is required.
+;Wants=blueman-applet@%i.service
+Wants=change-wall@%i.service change-wall@%i.timer
+Wants=gpg-agent.service
+; nm-applet: system `NetworkManager.service` is required.
+Wants=nm-applet@%i.service
+Wants=trayer-srg@%i.service
+Wants=uim-toolbar@%i.service
+Wants=uim-xim@%i.service
+Wants=volumeicon@%i.service
+Wants=xscreensaver@%i.service
+; polkit-gnome-authentication-agent: cannot pass envvar `$DESKTOP_SESSION`
+;Wants=polkit-gnome-authentication-agent@%i.service
+
+[Service]
+EnvironmentFile=%h/.xsession.env
+Type=simple
+ExecStart=/usr/bin/inotifywait -e DELETE_SELF /tmp/.X11-unix/X%i

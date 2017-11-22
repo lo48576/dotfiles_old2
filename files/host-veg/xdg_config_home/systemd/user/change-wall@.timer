@@ -1,0 +1,13 @@
+[Unit]
+Description=Change wall paper
+BindsTo=xsession-start@%i.service
+PartOf=xsession-start@%i.service
+
+[Timer]
+OnStartupSec=0s
+OnUnitActiveSec=5min
+AccuracySec=1min
+Unit=change-wall@%i.service
+
+[Install]
+WantedBy=multi-user.target

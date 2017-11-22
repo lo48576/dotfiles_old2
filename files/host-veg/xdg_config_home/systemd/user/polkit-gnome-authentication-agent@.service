@@ -1,0 +1,9 @@
+[Unit]
+Description=polkit-GNOME authentication agent
+BindsTo=xsession-start@%i.service
+
+[Service]
+EnvironmentFile=%h/.xsession.env
+PassEnvironment=DESKTOP_SESSION
+Type=simple
+ExecStart=/usr/libexec/polkit-gnome-authentication-agent-1

@@ -1,0 +1,10 @@
+[Unit]
+Description=XScreensaver
+BindsTo=xsession-start@%i.service
+PartOf=xsession-start@%i.service
+
+[Service]
+EnvironmentFile=%h/.xsession.env
+Type=simple
+ExecStart=/usr/bin/xscreensaver -no-splash
+ExecStop=/usr/bin/xscreensaver-command -exit

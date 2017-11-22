@@ -1,0 +1,11 @@
+[Unit]
+Description=Change wall paper
+BindsTo=xsession-start@%i.service
+PartOf=xsession-start@%i.service
+
+[Service]
+EnvironmentFile=%h/.xsession.env
+Environment="IMAGES_DIR=%h/Pictures/backgrounds/desktop"
+Environment="NUM_DISPLAY=3"
+ExecStart=%h/.config/systemd/user/scripts/change_wall.sh
+Type=oneshot

@@ -1,0 +1,10 @@
+[Unit]
+Description=Network manager applet on systray
+BindsTo=xsession-start@%i.service
+PartOf=xsession-start@%i.service
+# NOTE: Requires NetworkManager to be running.
+
+[Service]
+EnvironmentFile=%h/.xsession.env
+Type=simple
+ExecStart=/usr/bin/nm-applet

@@ -536,13 +536,6 @@ myStartupHook = do
         ++ " | grep '[/]scripts/local/status.sh '\"$DISPLAY\"'$'"
         ++ " | awk '{print $1}' | xargs -r kill"
         ++ " ; " ++ myDzenCommandLine (head screenSizes)
-    spawn "pgrep -x xscreensaver || xscreensaver -no-splash"
-    spawn "pkill -x trayer-srg ; trayer-srg --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 20 --transparent true --alpha 64 --tint 0x666666 --height 20 --monitor 0"
-    spawn "pgrep -x volumeicon || volumeicon"
-    spawn "pgrep -x uim-xim || uim-xim"
-    spawn "pgrep -x nm-applet || nm-applet"
-    --spawn "pgrep -x blueman-applet || blueman-applet"
-    spawn "pgrep -f '^(.*/)?uim-toolbar-gtk-systray$' || uim-toolbar-gtk-systray"
     spawn "gpg-connect-agent updatestartuptty /bye >/dev/null"
 
 ------------------------------------------------------------------------

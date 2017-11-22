@@ -1,0 +1,9 @@
+[Unit]
+Description=Volume icon on systray
+BindsTo=xsession-start@%i.service
+PartOf=xsession-start@%i.service
+
+[Service]
+EnvironmentFile=%h/.xsession.env
+Type=simple
+ExecStart=/usr/bin/volumeicon

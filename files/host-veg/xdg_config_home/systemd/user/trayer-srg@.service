@@ -1,0 +1,24 @@
+[Unit]
+Description=trayer-srg system tray
+BindsTo=xsession-start@%i.service
+PartOf=xsession-start@%i.service
+
+[Service]
+EnvironmentFile=%h/.xsession.env
+Type=simple
+ExecStart=/usr/bin/trayer-srg \
+    --edge top \
+    --align right \
+    --SetDockType true \
+    --SetPartialStrut true \
+    --expand true \
+    --widthtype percent \
+    --width 20 \
+    --transparent true \
+    --alpha 64 \
+    --tint 0x666666 \
+    --height 20 \
+    --monitor $DISPLAY
+
+[Install]
+DefaultInstance=0

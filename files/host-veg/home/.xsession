@@ -1,34 +1,29 @@
 #!/bin/sh
-SYSTEM_XMONAD_PATH=/usr/bin/xmonad
+XMONAD_PATH=/usr/bin/xmonad
 XTERM=xterm
 
 cd ~
 
-if [ -x "$SYSTEM_XMONAD_PATH" ] ; then
-    XMONAD_PATH="$SYSTEM_XMONAD_PATH"
-fi
-if [ -x "$XMONAD_PATH" ] ; then
-    export LANG=ja_JP.UTF-8
-    export XMODIFIER=@im=uim
-    export GTK_IM_MODULE=uim
-    export QT_IM_MODULE=uim
-    export _JAVA_AWT_WM_NONREPARENTING=1
-    unset TMUX
-    xrandr -s 0
-    # Applications to run in background
-    # gnome-extra/polkit-gnome: "A dbus session bus service that is used to bring up authentication dialogs"
-    BACKGROUND_APPLICATIONS="`which polkit-gnome-authentication-agent-1`"
-    for APP in $BACKGROUND_APPLICATIONS ; do
-        if [ -x "$APP" ] ; then
-            "$APP" &
-        fi
-    done
-    #eval $(gnome-keyring-daemon --start --components=secrets)
-
-    conky &
-    sleep 1; conky -c ~/.conkyrc_net1 &
-    exec dbus-launch --exit-with-session /usr/bin/xmonad
+if [ ! -x "$XMONAD_PATH" ] ; then
+    echo ".xsession: ${XMONAD_PATH} not exist. trying to exec ${XTERM}" >> $HOME/.xsession-errors
+    exec $XTERM
 fi
 
-echo "larry-xmonad-start: $XMONAD_PATH not exist. try $XTERM" >> $HOME/.xsession-errors
-exec $XTERM
+. "${HOME}/.xsession.env"
+export LANG XMODIFIER GTK_IM_MODULE QT_IM_MODULE
+export _JAVA_AWT_WM_NONREPARENTING=1
+unset TMUX
+# Get value without colon (e.g. "0" from ":0").
+DISPLAY_ID="${DISPLAY:1}"
+
+xrandr -s 0
+# Low (less than 1.00) brightness: workaround for (physically) corrupted screen since 2017-06-26.
+xrandr --output eDP1 --brightness 0.85
+
+systemctl --user restart "xsession-start@${DISPLAY_ID}.service"
+polkit-gnome-authentication-agent-1 &
+#eval $(gnome-keyring-daemon --start --components=secrets)
+
+conky &
+sleep 1; conky -c ~/.conkyrc_net1 &
+exec $XMONAD_PATH
