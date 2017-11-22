@@ -347,10 +347,11 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
         , ("pcmanfm"        , Run.safeSpawnProg "pcmanfm")
         , ("pavucontrol"    , Run.safeSpawnProg "pavucontrol")
         , ("arandr"         , Run.safeSpawnProg "arandr")
-        , ("qmpdclient"     , Run.safeSpawnProg "qmpdclient")
+        , ("cantana"        , Run.safeSpawnProg "cantata")
         , ("WLAN reconnect" , Run.safeSpawn "rofi" ["-modi", "Wifi:~/scripts/rofi-wifi.sh", "-show", "Wifi"])
         , ("hybrid-sleep"   , Run.safeSpawn "systemctl" ["hybrid-sleep"])
         , ("display sleep"  , Run.safeSpawn "xset" ["dpms", "force", "off"])
+        , ("keepassxc"      , Run.safeSpawnProg "keepassxc")
         ]
       )
     -- Select an existing session with grid.
