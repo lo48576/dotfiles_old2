@@ -1,0 +1,11 @@
+[Unit]
+Description=Minecraft
+
+[Install]
+WantedBy=user-%U.target
+
+[Slice]
+#CPUWeight=850
+CPUWeight=700
+#CPUQuota=75%
+MemoryMax=8G
