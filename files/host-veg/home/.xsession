@@ -19,9 +19,11 @@ DISPLAY_ID="${DISPLAY:1}"
 xrandr -s 0
 # Low (less than 1.00) brightness: workaround for (physically) corrupted screen since 2017-06-26.
 xrandr --output eDP1 --brightness 0.85
+polkit-gnome-authentication-agent-1 &
 
 systemctl --user restart "xsession-start@${DISPLAY_ID}.service"
-polkit-gnome-authentication-agent-1 &
+# About gnome-keyring-daemon, see <https://wiki.archlinux.jp/index.php/GNOME_Keyring>.
 #eval $(gnome-keyring-daemon --start --components=secrets)
 
-exec $XMONAD_PATH
+# `dbus-launch` is required for gpg-agent to use OS's password manager.
+exec dbus-launch --exit-with-session $XMONAD_PATH
