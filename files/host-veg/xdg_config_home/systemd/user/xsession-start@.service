@@ -16,6 +16,8 @@ Wants=volumeicon@%i.service
 Wants=xscreensaver@%i.service
 ; polkit-gnome-authentication-agent: cannot pass envvar `$DESKTOP_SESSION`
 ;Wants=polkit-gnome-authentication-agent@%i.service
+Wants=conky@%i.service
+Wants=conky-net1@%i.service
 
 [Service]
 EnvironmentFile=%h/.xsession.env

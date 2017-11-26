@@ -1,0 +1,9 @@
+[Unit]
+Description=Conky
+BindsTo=xsession-start@%i.service
+PartOf=xsession-start@%i.service
+
+[Service]
+EnvironmentFile=%h/.xsession.env
+Type=forking
+ExecStart=/usr/bin/conky --daemonize

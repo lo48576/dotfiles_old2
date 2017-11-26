@@ -24,6 +24,4 @@ systemctl --user restart "xsession-start@${DISPLAY_ID}.service"
 polkit-gnome-authentication-agent-1 &
 #eval $(gnome-keyring-daemon --start --components=secrets)
 
-conky &
-sleep 1; conky -c ~/.conkyrc_net1 &
 exec $XMONAD_PATH
