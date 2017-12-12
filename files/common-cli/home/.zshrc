@@ -179,7 +179,7 @@ block 'Get parameters with external binaries' && {
         # Rustc sysroot.
         _zshrc[app_base.rustc.sysroot]=$(whence rustc >/dev/null && rustc --print sysroot)
         # Rustc nightly sysroot.
-        _zshrc[app_base.rustc.sysroot.nightly]=$(whence rustup >/dev/null && rustup run nightly rustc --print sysroot)
+        _zshrc[app_base.rustc.sysroot.nightly]=$(whence rustup >/dev/null && { rustup toolchain list | grep -q '^nightly-[^ ]*\( (default)\)\?$' } && rustup run nightly rustc --print sysroot)
     }
     block 'Ruby' && {
         # Gem binaries directory.
