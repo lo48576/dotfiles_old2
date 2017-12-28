@@ -272,6 +272,7 @@ EXEC 01;32
 .dsl 01;37
 .htm 01;37
 .html 01;37
+.xhtml 01;37
 .xml 01;37
 .xsl 01;37
 .rnc 01;37
@@ -283,6 +284,7 @@ EXEC 01;32
 .ini 01;37
 .conf 01;37
 .yaml 01;37
+.yml 01;37
 .toml 01;37
 
 # Source code
@@ -304,3 +306,7 @@ EXEC 01;32
 #.sh
 #.zsh
 #.csh
+
+# Template files
+.erb 01;37
+.hbs 01;37
