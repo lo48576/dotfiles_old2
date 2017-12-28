@@ -115,5 +115,6 @@ alias btrfs="sudo btrfs"
 
 # Systemd long commands.
 whence systemctl >/dev/null && alias sysc="systemctl"
+whence systemctl >/dev/null && alias sysu="systemctl --user"
 
 # vim: set foldmethod=marker :
