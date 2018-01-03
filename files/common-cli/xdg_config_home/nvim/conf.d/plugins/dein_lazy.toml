@@ -50,14 +50,14 @@ repo = 'vim-scripts/renamer.vim'
 on_cmd = 'Renamer'
 
 # Rust.
-[[plugins]]
-repo = 'racer-rust/vim-racer'
-if = 'executable("racer") == 1'
-on_ft = 'rust'
-hook_source = '''
-	let g:racer_cmd = 'racer'
-	let g:racer_experimental_completer = 1
-'''
+#[[plugins]]
+#repo = 'racer-rust/vim-racer'
+#if = 'executable("racer") == 1'
+#on_ft = 'rust'
+#hook_source = '''
+#	let g:racer_cmd = 'racer'
+#	let g:racer_experimental_completer = 1
+#'''
 
 ## Required for 'AtsushiM/sass-compile.vim'.
 #[[plugins]]
