@@ -6,4 +6,4 @@ PartOf=xsession-start@%i.service
 [Service]
 EnvironmentFile=%h/.xsession.env
 Type=simple
-ExecStart=/usr/bin/uim-toolbar-gtk-systray
+ExecStart=/usr/bin/uim-toolbar-gtk3-systray
