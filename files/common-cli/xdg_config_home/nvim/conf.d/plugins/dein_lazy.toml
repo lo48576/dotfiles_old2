@@ -162,7 +162,7 @@ on_cmd = ['Vinfo', 'VinfoClean', 'VinfoNext', 'VinfoPrevious']
 # Outliner.
 [[plugins]]
 repo = 'vim-voom/VOoM'
-on_cmd = ['Voom', 'Voomhelp', 'Voomexec', 'Voomlog']
+on_cmd = ['Voom', 'VoomToggle', 'Voomhelp', 'Voomexec', 'Voomlog', 'Voomgrep']
 hook_source = '''
 	let g:voom_ft_modes = {
 				\	'markdown' : 'markdown',
