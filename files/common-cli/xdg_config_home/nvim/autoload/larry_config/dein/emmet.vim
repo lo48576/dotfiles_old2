@@ -16,5 +16,5 @@ function! larry_config#dein#emmet#hook_add() abort
 
 	" Enable just for html/css/scss and some other types.
 	let g:user_emmet_install_global = 0
-	autocmd FileType html,xhtml,css,scss,html5,eruby,jsp,xml,coffee,jinja,mason,liquid,haml,html.handlebars,xslt EmmetInstall
+	autocmd FileType html,xhtml,css,scss,html5,eruby,jsp,xml,coffee,jinja,mason,liquid,haml,html.handlebars,xslt,markdown EmmetInstall
 endfunction
