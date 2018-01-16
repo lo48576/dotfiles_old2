@@ -180,6 +180,8 @@ on_source = 'VOoM'
 # Language server support.
 [[plugins]]
 repo = 'autozimu/LanguageClient-neovim'
+rev = 'next'
+build = 'bash install.sh'
 if = 'executable("rls") == 1'
 on_ft = 'rust'
 #hook_add = ':UpdateRemotePlugins'
