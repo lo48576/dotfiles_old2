@@ -367,6 +367,14 @@ block 'Environment variables' && {
                     # mlterm.
                     _zshrc[terminal.emulator]='mlterm'
                     ;;
+                xterm*)
+                    # xterm or compatible terminal emulator.
+                    _zshrc[terminal.emulator]='xterm'
+                    ;;
+                rxvt-unicode*)
+                    # xterm or compatible terminal emulator.
+                    _zshrc[terminal.emulator]='rxvt-unicode'
+                    ;;
             esac
 
             if [[ -n $MLTERM ]] ; then
@@ -397,6 +405,10 @@ block 'Environment variables' && {
                 xterm|gnome-terminal)
                     LANG=$_zshrc[env.LANG.default]
                     TERM='xterm-256color'
+                    ;;
+                rxvt-unicode)
+                    LANG=$_zshrc[env.LANG.default]
+                    TERM='rxvt-unicode-256color'
                     ;;
                 linux)
                     LANG='C'
