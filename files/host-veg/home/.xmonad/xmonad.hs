@@ -70,8 +70,12 @@ import qualified XMonad.Actions.CopyWindow as CopyWindow
 -- certain contrib modules.
 --
 spawnInTerminal :: String -> [String] -> X ()
-myTerminal      = "mlterm"
-spawnInTerminal cmd opts = Run.safeSpawn "mlterm" $ "-e":cmd:opts
+-- For mlterm.
+--myTerminal      = "mlterm"
+--spawnInTerminal cmd opts = Run.safeSpawn myTerminal $ "-e":cmd:opts
+-- For alacritty.
+myTerminal      = "/home/larry/.cargo/bin/alacritty"
+spawnInTerminal cmd opts = Run.safeSpawn myTerminal $ "-e":cmd:opts
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
