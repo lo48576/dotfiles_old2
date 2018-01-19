@@ -69,8 +69,8 @@ import qualified XMonad.Actions.CopyWindow as CopyWindow
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "mlterm"
 spawnInTerminal :: String -> [String] -> X ()
+myTerminal      = "mlterm"
 spawnInTerminal cmd opts = Run.safeSpawn "mlterm" $ "-e":cmd:opts
 
 -- Whether focus follows the mouse pointer.
