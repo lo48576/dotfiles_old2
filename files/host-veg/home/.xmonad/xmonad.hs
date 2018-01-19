@@ -70,6 +70,8 @@ import qualified XMonad.Actions.CopyWindow as CopyWindow
 -- certain contrib modules.
 --
 myTerminal      = "mlterm"
+spawnInTerminal :: String -> [String] -> X ()
+spawnInTerminal cmd opts = Run.safeSpawn "mlterm" $ "-e":cmd:opts
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -599,21 +601,18 @@ spawnStdout prog input = liftIO $ Run.spawnPipe prog >>= (\h -> Run.hPutStrLn h 
 messageBox :: MonadIO m => String -> String -> m ()
 messageBox title msg = spawnStdout cmd msg
     where cmd = "xmessage -file - -default okay"
-    --where cmd = "zenity --text-info --title=" ++ escapeAndQuoteShellArg title
-
-escapeAndQuoteShellArg :: String -> String
-escapeAndQuoteShellArg src = "\"" ++ (escapeShellArg src) ++ "\""
 
 escapeShellArg :: String -> String
 escapeShellArg = foldr escapeChar ""
   where escapeChar x = case x of
           '\\' -> ("\\\\" ++)
+          ' '  -> ("\\ " ++)
           '"'  -> ("\\\"" ++)
           x    -> (x :)
 
 mltermTmuxSession :: String -> X ()
-mltermTmuxSession s = spawn $ "mlterm -e sh -c " ++ (escapeAndQuoteShellArg $ "tmux -2 new-session -d -s " ++ name ++ " ; exec tmux -2 attach-session -t =" ++ name)
-    where name = escapeAndQuoteShellArg s
+mltermTmuxSession s = spawnInTerminal "sh" ["-c", ("tmux -2 new-session -d -s " ++ name ++ " ; exec tmux -2 attach-session -t =" ++ name)]
+    where name = escapeShellArg s
 
 -- Get tmux sessions.
 tmuxSessionsList :: MonadIO m => m [String]
