@@ -377,6 +377,11 @@ block 'Environment variables' && {
                     ;;
             esac
 
+            if [[ -n $TMUX ]] ; then
+                # tmux.
+                _zshrc[terminal.multiplexer]='tmux'
+            fi
+
             if [[ -n $MLTERM ]] ; then
                 # mlterm.
                 _zshrc[terminal.emulator]='mlterm'
