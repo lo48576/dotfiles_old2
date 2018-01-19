@@ -602,12 +602,14 @@ messageBox title msg = spawnStdout cmd msg
     --where cmd = "zenity --text-info --title=" ++ escapeAndQuoteShellArg title
 
 escapeAndQuoteShellArg :: String -> String
-escapeAndQuoteShellArg src = "\"" ++ (escape src) ++ "\""
-    where escape = foldr escapeChar ""
-          escapeChar x = case x of
-            '\\' -> ("\\\\" ++)
-            '"'  -> ("\\\"" ++)
-            x    -> (x :)
+escapeAndQuoteShellArg src = "\"" ++ (escapeShellArg src) ++ "\""
+
+escapeShellArg :: String -> String
+escapeShellArg = foldr escapeChar ""
+  where escapeChar x = case x of
+          '\\' -> ("\\\\" ++)
+          '"'  -> ("\\\"" ++)
+          x    -> (x :)
 
 mltermTmuxSession :: String -> X ()
 mltermTmuxSession s = spawn $ "mlterm -e sh -c " ++ (escapeAndQuoteShellArg $ "tmux -2 new-session -d -s " ++ name ++ " ; exec tmux -2 attach-session -t =" ++ name)
