@@ -1,0 +1,11 @@
+[Unit]
+Description=Compton compositor
+BindsTo=xsession-start@%i.service
+PartOf=xsession-start@%i.service
+
+[Service]
+EnvironmentFile=%h/.xsession.env
+Type=simple
+# -C: Avoid drawing shadows on dock/panel windows.
+# -G: Don't draw shadows on drag-and-drop windows.
+ExecStart=/usr/bin/compton -CG --backend glx --vsync opengl

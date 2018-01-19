@@ -6,6 +6,7 @@ ConditionPathExists=/tmp/.X11-unix/X%i
 ; blueman: system `bluetooth.service` is required.
 ;Wants=blueman-applet@%i.service
 Wants=change-wall@%i.service change-wall@%i.timer
+Wants=compton@%i.service
 Wants=gpg-agent.service
 ; nm-applet: system `NetworkManager.service` is required.
 Wants=nm-applet@%i.service
