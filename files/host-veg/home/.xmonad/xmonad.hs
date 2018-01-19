@@ -357,7 +357,7 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
         ]
       )
     -- Select an existing session with grid.
-    , ((modm              , xK_semicolon), mltermAttachTmuxSession)
+    , ((modm              , xK_semicolon), termAttachTmuxSession)
     -- Specify session to attach or create with prompt.
     , ((modm .|. shiftMask, xK_semicolon), tmuxSessionPrompt)
     -- Copy unicode character.
@@ -610,8 +610,8 @@ escapeShellArg = foldr escapeChar ""
           '"'  -> ("\\\"" ++)
           x    -> (x :)
 
-mltermTmuxSession :: String -> X ()
-mltermTmuxSession s = spawnInTerminal "sh" ["-c", ("tmux -2 new-session -d -s " ++ name ++ " ; exec tmux -2 attach-session -t =" ++ name)]
+termTmuxSession :: String -> X ()
+termTmuxSession s = spawnInTerminal "sh" ["-c", ("tmux -2 new-session -d -s " ++ name ++ " ; exec tmux -2 attach-session -t =" ++ name)]
     where name = escapeShellArg s
 
 -- Get tmux sessions.
@@ -627,17 +627,17 @@ tmuxSessionsList' = (map proc . lines) `liftM` Run.runProcessWithInput "tmux" ["
                          then "detached"
                          else "attached"
 
-mltermAttachTmuxSession :: X ()
---mltermAttachTmuxSession = map genAction `liftM` tmuxSessionsList >>= runSelectedAction def
---    where genAction sname = (sname, mltermTmuxSession sname)
-mltermAttachTmuxSession = map genAction `liftM` tmuxSessionsList' >>= GridSelect.runSelectedAction def
-    where genAction (sname, sstat) = (sname ++ " [" ++ sstat ++ "]", mltermTmuxSession sname)
+termAttachTmuxSession :: X ()
+--termAttachTmuxSession = map genAction `liftM` tmuxSessionsList >>= runSelectedAction def
+--    where genAction sname = (sname, termTmuxSession sname)
+termAttachTmuxSession = map genAction `liftM` tmuxSessionsList' >>= GridSelect.runSelectedAction def
+    where genAction (sname, sstat) = (sname ++ " [" ++ sstat ++ "]", termTmuxSession sname)
 
 tmuxSessionPrompt :: X ()
 tmuxSessionPrompt =
     tmuxSessionsList >>=
     (\ss -> Prompt.inputPromptWithCompl myXPConfig "tmux session" (Prompt.mkComplFunFromList' ss)
-            ?+ mltermTmuxSession)
+            ?+ termTmuxSession)
 
 systemdScopeRun :: Maybe String -> [String] -> X ()
 systemdScopeRun slice cmdline = Run.safeSpawn "systemd-run" $ ["--user", "--scope"] ++ (sliceToList slice) ++ ["--"] ++ cmdline
