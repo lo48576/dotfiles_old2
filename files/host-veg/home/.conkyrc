@@ -1,7 +1,7 @@
 conky.config = {
 --## .conkyrc for xmonad
--- バックグラウンドで動かす
-	background = true,
+-- フォアグラウンドで動かす
+	background = false,
 -- xftが無効な場合のフォント
 	font = 'Sans:size=10',
 -- フォントを指定するか

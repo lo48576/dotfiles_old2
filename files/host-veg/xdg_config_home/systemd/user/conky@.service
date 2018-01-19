@@ -5,5 +5,5 @@ PartOf=xsession-start@%i.service
 
 [Service]
 EnvironmentFile=%h/.xsession.env
-Type=forking
-ExecStart=/usr/bin/conky --daemonize
+Type=simple
+ExecStart=/usr/bin/conky
