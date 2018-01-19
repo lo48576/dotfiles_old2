@@ -599,10 +599,10 @@ spawnStdout prog input = liftIO $ Run.spawnPipe prog >>= (\h -> Run.hPutStrLn h 
 messageBox :: MonadIO m => String -> String -> m ()
 messageBox title msg = spawnStdout cmd msg
     where cmd = "xmessage -file - -default okay"
-    --where cmd = "zenity --text-info --title=" ++ escapeShellArg title
+    --where cmd = "zenity --text-info --title=" ++ escapeAndQuoteShellArg title
 
-escapeShellArg :: String -> String
-escapeShellArg src = "\"" ++ (escape src) ++ "\""
+escapeAndQuoteShellArg :: String -> String
+escapeAndQuoteShellArg src = "\"" ++ (escape src) ++ "\""
     where escape = foldr escapeChar ""
           escapeChar x = case x of
             '\\' -> ("\\\\" ++)
@@ -610,8 +610,8 @@ escapeShellArg src = "\"" ++ (escape src) ++ "\""
             x    -> (x :)
 
 mltermTmuxSession :: String -> X ()
-mltermTmuxSession s = spawn $ "mlterm -e sh -c " ++ (escapeShellArg $ "tmux -2 new-session -d -s " ++ name ++ " ; exec tmux -2 attach-session -t =" ++ name)
-    where name = escapeShellArg s
+mltermTmuxSession s = spawn $ "mlterm -e sh -c " ++ (escapeAndQuoteShellArg $ "tmux -2 new-session -d -s " ++ name ++ " ; exec tmux -2 attach-session -t =" ++ name)
+    where name = escapeAndQuoteShellArg s
 
 -- Get tmux sessions.
 tmuxSessionsList :: MonadIO m => m [String]
