@@ -10,7 +10,7 @@ if [ ! -x "$XMONAD_PATH" ] ; then
 fi
 
 . "${HOME}/.xsession.env"
-export LANG XMODIFIER GTK_IM_MODULE QT_IM_MODULE
+export LANG XMODIFIERS GTK_IM_MODULE QT_IM_MODULE
 export _JAVA_AWT_WM_NONREPARENTING=1
 unset TMUX
 # Get value without colon (e.g. "0" from ":0").

@@ -526,10 +526,6 @@ myStartupHook = do
     EwmhDesktops.ewmhDesktopsStartup
     Hooks.setWMName "LG3D"
     screenSizes <- myScreenSizes
-    liftIO $ Env.putEnv "LANG=ja_JP.UTF8"
-    liftIO $ Env.putEnv "XMODIFIERS=@im=uim"
-    liftIO $ Env.putEnv "GTK_IM_MODULE=uim"
-    liftIO $ Env.putEnv "QT_IM_MODULE=uim"
     -- Let java VM know about xmonad.
     -- Necessary to use java gui application on XMonad.
     liftIO $ Env.putEnv "_JAVA_AWT_WM_NONREPARENTING=1"
