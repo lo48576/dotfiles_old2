@@ -4,6 +4,7 @@
     ],
     "define": {
         "keymap": {
+            "Muhenkan": "set-input-mode-hiragana",
             "C-j": "set-input-mode-hiragana"
         }
     }
