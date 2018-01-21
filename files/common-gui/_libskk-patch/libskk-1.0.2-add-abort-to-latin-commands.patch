@@ -1,0 +1,79 @@
+diff -Narup libskk-1.0.2.orig/libskk/state.vala libskk-1.0.2/libskk/state.vala
+--- libskk-1.0.2.orig/libskk/state.vala	2018-01-21 00:40:00.542005625 +0900
++++ libskk-1.0.2/libskk/state.vala	2018-01-21 02:44:33.526440543 +0900
+@@ -421,15 +421,29 @@ namespace Skk {
+         {
+             var command = state.lookup_key (key);
+             // check abort and commit event
+-            if (command == "abort") {
++            if (command == "abort" ||
++                command == "abort-to-latin" ||
++                command == "abort-to-latin-passthrough") {
+                 bool retval;
++                retval = state.recursive_edit_abort ();
++                /*
+                 if (state.rom_kana_converter.preedit.length > 0) {
+                     retval = true;
+                 } else {
+                     retval = state.recursive_edit_abort ();
+                 }
++                */
+                 state.reset ();
+-                return retval;
++                if (command == "abort") {
++                    return retval;
++                }
++                // change to latin mode
++                if (state.input_mode != InputMode.LATIN) {
++                    state.input_mode = InputMode.LATIN;
++                    retval = true;
++                }
++                // return false to let `key` event pass through
++                return command == "abort-to-latin-passthrough" ? false : retval;
+             } else if (command == "commit" ||
+                        command == "commit-unhandled") {
+                 bool retval;
+@@ -608,7 +622,9 @@ namespace Skk {
+                                                   ref KeyEvent key)
+         {
+             var command = state.lookup_key (key);
+-            if (command == "abort") {
++            if (command == "abort" ||
++                command == "abort-to-latin" ||
++                command == "abort-to-latin-passthrough") {
+                 state.reset ();
+                 return true;
+             }
+@@ -655,7 +671,9 @@ namespace Skk {
+                                                   ref KeyEvent key)
+         {
+             var command = state.lookup_key (key);
+-            if (command == "abort") {
++            if (command == "abort" ||
++                command == "abort-to-latin" ||
++                command == "abort-to-latin-passthrough") {
+                 state.reset ();
+                 return true;
+             }
+@@ -710,7 +728,9 @@ namespace Skk {
+                                                   ref KeyEvent key)
+         {
+             var command = state.lookup_key (key);
+-            if (command == "abort") {
++            if (command == "abort" ||
++                command == "abort-to-latin" ||
++                command == "abort-to-latin-passthrough") {
+                 state.reset ();
+                 return true;
+             }
+@@ -989,7 +1009,9 @@ namespace Skk {
+                 }
+                 return true;
+             }
+-            else if (command == "abort") {
++            else if (command == "abort" ||
++                     command == "abort-to-latin" ||
++                     command == "abort-to-latin-passthrough") {
+                 state.candidates.clear ();
+                 state.cancel_okuri ();
+                 state.handler_type = typeof (StartStateHandler);

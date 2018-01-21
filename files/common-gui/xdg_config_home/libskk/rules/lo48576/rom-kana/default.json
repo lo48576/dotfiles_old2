@@ -1,0 +1,10 @@
+{
+    "include": [
+        "initial",
+        "custom"
+    ],
+    "define": {
+        "rom-kana": {
+        }
+    }
+}

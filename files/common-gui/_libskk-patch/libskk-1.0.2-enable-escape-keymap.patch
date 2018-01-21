@@ -1,0 +1,13 @@
+diff -Naurp libskk-1.0.2.orig/libskk/key-event.vala libskk-1.0.2/libskk/key-event.vala
+--- libskk-1.0.2.orig/libskk/key-event.vala	2018-01-21 00:40:00.541005620 +0900
++++ libskk-1.0.2/libskk/key-event.vala	2018-01-21 00:42:06.363630834 +0900
+@@ -238,7 +238,8 @@ namespace Skk {
+             { Keysyms.Page_Down, "Page_Down" },
+             { Keysyms.KP_Page_Down, "Page_Down" },
+             { Keysyms.Muhenkan, "lshift" },
+-            { Keysyms.Henkan, "rshift" }
++            { Keysyms.Henkan, "rshift" },
++            { Keysyms.Escape, "Escape" }
+         };
+ 
+         /**
