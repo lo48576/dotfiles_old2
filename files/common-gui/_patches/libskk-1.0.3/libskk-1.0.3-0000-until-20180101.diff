@@ -1,0 +1,142 @@
+diff --git a/configure.ac b/configure.ac
+index 5575dd55fbe1..67c96de6d3a3 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -67,7 +67,7 @@ AC_SUBST([LT_REVISION])
+ AC_SUBST([LT_AGE])
+ 
+ # check gio
+-PKG_CHECK_MODULES([GIO], [gio-2.0], ,
++PKG_CHECK_MODULES([GIO], [gio-2.0 >= 2.36], ,
+   [AC_MSG_ERROR([can't find gio-2.0])])
+ 
+ # check gee
+diff --git a/libskk/key-event.vala b/libskk/key-event.vala
+index 64a5b5c685c7..7ce5b122d6ea 100644
+--- a/libskk/key-event.vala
++++ b/libskk/key-event.vala
+@@ -203,8 +203,13 @@ namespace Skk {
+                 // newer valac thinks null in a fixed length array as
+                 // an empty string
+                 var array = elements.to_array ();
++                // Change length of strv may make vala no able to free it
++                // correctly. Save the length and restore it later.
++                var old_length = array.length;
+                 array.length = -1;
+-                return "(" + string.joinv (" ", array) + ")";
++                var key_string = "(" + string.joinv (" ", array) + ")";
++                array.length = old_length;
++                return key_string;
+             } else {
+                 return _base;
+             }
+diff --git a/tests/Makefile.am b/tests/Makefile.am
+index 1547bccb0277..6c209fd66b9b 100644
+--- a/tests/Makefile.am
++++ b/tests/Makefile.am
+@@ -19,7 +19,8 @@ TESTS_ENVIRONMENT =					\
+ 	G_SLICE=${G_SLICE},always-malloc		\
+ 	LIBSKK_DATA_PATH=$(top_srcdir):$(top_srcdir)/tests
+ LOG_COMPILER = $(LIBTOOL) --mode=execute $(VALGRIND) $(VALGRIND_OPTS)
+-TESTS = rom-kana file-dict user-dict cdb-dict skkserv rule context basic
++check_PROGRAMS = rom-kana file-dict user-dict cdb-dict skkserv rule context basic
++TESTS = $(check_PROGRAMS)
+ noinst_PROGRAMS = $(TESTS)
+ noinst_HEADERS = common.h
+ 
+diff --git a/tests/basic.c b/tests/basic.c
+index 9c63e5d429f1..b6b16b492733 100644
+--- a/tests/basic.c
++++ b/tests/basic.c
+@@ -413,7 +413,6 @@ start_preedit_no_delete (void) {
+ 
+ int
+ main (int argc, char **argv) {
+-  g_type_init ();
+   skk_init ();
+   g_test_init (&argc, &argv, NULL);
+   g_test_add ("/libskk/input-mode",
+diff --git a/tests/cdb-dict.c b/tests/cdb-dict.c
+index 15336b88666c..25c31cade997 100644
+--- a/tests/cdb-dict.c
++++ b/tests/cdb-dict.c
+@@ -51,7 +51,6 @@ cdb_dict (void)
+ int
+ main (int argc, char **argv)
+ {
+-  g_type_init ();
+   skk_init ();
+   g_test_init (&argc, &argv, NULL);
+   g_test_add_func ("/libskk/cdb-dict", cdb_dict);
+diff --git a/tests/context.c b/tests/context.c
+index d4b583b55c9b..0d45510adbaf 100644
+--- a/tests/context.c
++++ b/tests/context.c
+@@ -97,7 +97,6 @@ basic (void)
+ 
+ int
+ main (int argc, char **argv) {
+-  g_type_init ();
+   skk_init ();
+   g_test_init (&argc, &argv, NULL);
+   g_test_add_func ("/libskk/context/dictionary",
+diff --git a/tests/file-dict.c b/tests/file-dict.c
+index 94477d4937bc..4a12cec675d3 100644
+--- a/tests/file-dict.c
++++ b/tests/file-dict.c
+@@ -41,7 +41,6 @@ file_dict (void)
+ int
+ main (int argc, char **argv)
+ {
+-  g_type_init ();
+   skk_init ();
+   g_test_init (&argc, &argv, NULL);
+   g_test_add_func ("/libskk/file-dict", file_dict);
+diff --git a/tests/rom-kana.c b/tests/rom-kana.c
+index 86aabdf97e94..148a0f380a68 100644
+--- a/tests/rom-kana.c
++++ b/tests/rom-kana.c
+@@ -45,7 +45,6 @@ rom_kana (void)
+ 
+ int
+ main (int argc, char **argv) {
+-  g_type_init ();
+   skk_init ();
+   g_test_init (&argc, &argv, NULL);
+   g_test_add_func ("/libskk/rom-kana", rom_kana);
+diff --git a/tests/rule.c b/tests/rule.c
+index 0ac3c5b85e60..6c0c3e830b6b 100644
+--- a/tests/rule.c
++++ b/tests/rule.c
+@@ -127,7 +127,6 @@ nicola (void)
+ 
+ int
+ main (int argc, char **argv) {
+-  g_type_init ();
+   skk_init ();
+   g_test_init (&argc, &argv, NULL);
+   g_test_add_func ("/libskk/list", list);
+diff --git a/tests/skkserv.c b/tests/skkserv.c
+index 480c3af0889c..4a2b87923cc8 100644
+--- a/tests/skkserv.c
++++ b/tests/skkserv.c
+@@ -170,7 +170,6 @@ skkserv (void)
+ int
+ main (int argc, char **argv)
+ {
+-  g_type_init ();
+   skk_init ();
+   g_test_init (&argc, &argv, NULL);
+   g_test_add_func ("/libskk/skkserv", skkserv);
+diff --git a/tests/user-dict.c b/tests/user-dict.c
+index 18bae362045c..adfa79ba6d83 100644
+--- a/tests/user-dict.c
++++ b/tests/user-dict.c
+@@ -82,7 +82,6 @@ completion (void)
+ 
+ int
+ main (int argc, char **argv) {
+-  g_type_init ();
+   skk_init ();
+   g_test_init (&argc, &argv, NULL);
+   g_test_add_func ("/libskk/user-dict", user_dict);

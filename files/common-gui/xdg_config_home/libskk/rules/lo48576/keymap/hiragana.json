@@ -5,6 +5,8 @@
     "define": {
         "keymap": {
             "C-l": "commit",
+            "C-y": "commit",
+            "Muhenkan": "commit",
             "q": "set-input-mode-katakana",
             "Q": "start-preedit",
             "l": "set-input-mode-latin",

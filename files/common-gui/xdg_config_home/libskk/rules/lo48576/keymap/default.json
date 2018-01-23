@@ -2,7 +2,7 @@
     "define": {
         "keymap": {
             "C-[": "abort-to-latin",
-            "Escape": "abort-to-latin-passthrough",
+            "Escape": "abort-to-latin-unhandled",
             "C-p": "previous-candidate",
             "C-n": "next-candidate",
             "C-g": "abort",

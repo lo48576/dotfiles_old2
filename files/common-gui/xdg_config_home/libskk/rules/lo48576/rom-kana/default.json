@@ -1,10 +1,7 @@
 {
     "include": [
-        "initial",
-        "custom"
-    ],
-    "define": {
-        "rom-kana": {
-        }
-    }
+        "default/default",
+        "kana",
+        "symbols"
+    ]
 }

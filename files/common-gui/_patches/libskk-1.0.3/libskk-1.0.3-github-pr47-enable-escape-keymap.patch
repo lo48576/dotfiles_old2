@@ -1,0 +1,129 @@
+From 6ca14c33f07bb6fc297d6b78dcb45f11881fe5a4 Mon Sep 17 00:00:00 2001
+From: YOSHIOKA Takuma <tashioka.256@gmail.com>
+Date: Sun, 21 Jan 2018 01:57:51 +0900
+Subject: [PATCH 1/4] Add `Escape` keyval name
+
+By this change, "Escape" can be used to represent escape key in keymap
+rules.
+---
+ libskk/key-event.vala | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/libskk/key-event.vala b/libskk/key-event.vala
+index 7ce5b12..92d9337 100644
+--- a/libskk/key-event.vala
++++ b/libskk/key-event.vala
+@@ -243,7 +243,8 @@ namespace Skk {
+             { Keysyms.Page_Down, "Page_Down" },
+             { Keysyms.KP_Page_Down, "Page_Down" },
+             { Keysyms.Muhenkan, "lshift" },
+-            { Keysyms.Henkan, "rshift" }
++            { Keysyms.Henkan, "rshift" },
++            { Keysyms.Escape, "Escape" }
+         };
+ 
+         /**
+
+From e05819f801ce528b129b4fc3d9def39ee6758e00 Mon Sep 17 00:00:00 2001
+From: YOSHIOKA Takuma <tashioka.256@gmail.com>
+Date: Sun, 21 Jan 2018 17:43:31 +0900
+Subject: [PATCH 2/4] Use keysym `Henkan` and `Muhenkan` instead of `lshift`
+ and `rshift`
+
+This will solve the issue #38.
+---
+ libskk/key-event.vala | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libskk/key-event.vala b/libskk/key-event.vala
+index 92d9337..0939f3d 100644
+--- a/libskk/key-event.vala
++++ b/libskk/key-event.vala
+@@ -242,8 +242,8 @@ namespace Skk {
+             { Keysyms.KP_Page_Up, "Page_Up" },
+             { Keysyms.Page_Down, "Page_Down" },
+             { Keysyms.KP_Page_Down, "Page_Down" },
+-            { Keysyms.Muhenkan, "lshift" },
+-            { Keysyms.Henkan, "rshift" },
++            { Keysyms.Muhenkan, "Muhenkan" },
++            { Keysyms.Henkan, "Henkan" },
+             { Keysyms.Escape, "Escape" }
+         };
+ 
+
+From a2c3cdc3d0ccb4e58201f6abd2ed2019ce8b3ee0 Mon Sep 17 00:00:00 2001
+From: YOSHIOKA Takuma <tashioka.256@gmail.com>
+Date: Tue, 23 Jan 2018 02:17:25 +0900
+Subject: [PATCH 3/4] Revert "Use keysym `Henkan` and `Muhenkan` instead of
+ `lshift` and `rshift`"
+
+This reverts commit b543ed1cf2cb4d4844099978e41791af0ef80f21.
+
+NICOLA wants "lshift" and "rshift" keysyms.
+See <https://github.com/ueno/libskk/pull/47#pullrequestreview-90426727>
+for detail.
+---
+ libskk/key-event.vala | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libskk/key-event.vala b/libskk/key-event.vala
+index 0939f3d..92d9337 100644
+--- a/libskk/key-event.vala
++++ b/libskk/key-event.vala
+@@ -242,8 +242,8 @@ namespace Skk {
+             { Keysyms.KP_Page_Up, "Page_Up" },
+             { Keysyms.Page_Down, "Page_Down" },
+             { Keysyms.KP_Page_Down, "Page_Down" },
+-            { Keysyms.Muhenkan, "Muhenkan" },
+-            { Keysyms.Henkan, "Henkan" },
++            { Keysyms.Muhenkan, "lshift" },
++            { Keysyms.Henkan, "rshift" },
+             { Keysyms.Escape, "Escape" }
+         };
+ 
+
+From 75648cfe5a84f8bb88d555b09457056157d05a8c Mon Sep 17 00:00:00 2001
+From: YOSHIOKA Takuma <tashioka.256@gmail.com>
+Date: Tue, 23 Jan 2018 02:37:11 +0900
+Subject: [PATCH 4/4] Add workaround to use `{Muh,H}enkan` as alias to
+ `{l,r}shift`
+
+By this way, "lshift" and "rshift" keyval names are preserved, and
+"Muhenkan" and "Henkan" can be used in typing rules config.
+---
+ libskk/key-event.vala | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/libskk/key-event.vala b/libskk/key-event.vala
+index 92d9337..cc1dec9 100644
+--- a/libskk/key-event.vala
++++ b/libskk/key-event.vala
+@@ -159,6 +159,18 @@ namespace Skk {
+                     name = key;
+                     code = name.char_count () == 1 ? name.get_char () : '\0';
+                 }
++                // FIXME: Temporary workaround to enable `Muhenkan` and `Henkan`
++                //        keysyms in typing rule files.
++                //        These will be interpreted as "lshift" and "rshift", respectively.
++                //        See the comment of `NAME_KEYVALS` constant and
++                //        <https://github.com/ueno/libskk/pull/47#pullrequestreview-90426727>.
++                if (name == "Muhenkan") {
++                    name = "lshift";
++                    assert (code == '\0');
++                } else if (name == "Henkan") {
++                    name = "rshift";
++                    assert (code == '\0');
++                }
+             }
+         }
+ 
+@@ -242,6 +254,9 @@ namespace Skk {
+             { Keysyms.KP_Page_Up, "Page_Up" },
+             { Keysyms.Page_Down, "Page_Down" },
+             { Keysyms.KP_Page_Down, "Page_Down" },
++            // NICOLA wants "lshift" and "rshift" keysyms.
++            // See <https://github.com/ueno/libskk/pull/47#pullrequestreview-90426727>
++            // for detail.
+             { Keysyms.Muhenkan, "lshift" },
+             { Keysyms.Henkan, "rshift" },
+             { Keysyms.Escape, "Escape" }
