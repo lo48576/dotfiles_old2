@@ -499,6 +499,7 @@ block 'Applications global' && {
 # Configs which may be used from single applications.
 block 'Application' && {
     block 'tmux' && {
+        export_nonempty TMUX_TMPDIR="$XDG_RUNTIME_DIR"
         if [[ -n $TMUX ]] ; then
             # Set window title.
             # #T: pane_title
