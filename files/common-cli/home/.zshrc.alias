@@ -117,4 +117,7 @@ alias btrfs="sudo btrfs"
 whence systemctl >/dev/null && alias sysc="systemctl"
 whence systemctl >/dev/null && alias sysu="systemctl --user"
 
+# `youtube-dl`.
+whence youtube-dl >/dev/null && alias youtube-dl="youtube-dl --xattrs --audio-quality=0"
+
 # vim: set foldmethod=marker :
